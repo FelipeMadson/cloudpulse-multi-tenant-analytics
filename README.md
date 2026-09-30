@@ -34,7 +34,7 @@
 
 ## 🎮 Live Interactive Playground (No Backend Required)
 
-Experimente o simulador em tempo real executando 100% no seu navegador com WebCrypto, Token Bucket e Write-Ahead Logging:
+Experimente o console SaaS corporativo com métricas multi-tenant, gráficos de vazão ao vivo e cálculo de percentis P99:
 👉 **[Acessar Live Playground do Cloudpulse Multi Tenant Analytics](https://felipemadson.github.io/cloudpulse-multi-tenant-analytics/)**
 
 ## 🖥️ Demonstração em Terminal Vetorial (Execução & Benchmarks)
