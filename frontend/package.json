@@ -1,0 +1,20 @@
+{
+  "name": "cloudpulse-multi-tenant-analytics-frontend",
+  "version": "1.0.0",
+  "description": "Frontend SPA & Console Administrativo para CloudPulse Multi-Tenant Analytics",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "vite": "^5.4.2",
+    "typescript": "^5.7.2"
+  }
+}

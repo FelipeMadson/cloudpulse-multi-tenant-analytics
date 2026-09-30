@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>CloudPulse Multi-Tenant Analytics — Especificação OpenAPI & Documentação Interativa</title>
+  <style>
+    :root {
+      --bg: #f7f8f5;
+      --card: #ffffff;
+      --line: #e3e7df;
+      --ink: #162019;
+      --muted: #5e6b63;
+      --accent: #145e4d;
+      --method-get: #1e7e34;
+      --method-post: #0056b3;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); margin: 0; padding: 32px clamp(16px, 4vw, 48px); }
+    .header { margin-bottom: 32px; border-bottom: 1px solid var(--line); padding-bottom: 20px; }
+    h1 { font-family: Georgia, serif; font-size: 2rem; margin: 0 0 8px; color: var(--accent); }
+    p.desc { color: var(--muted); font-size: 0.95rem; margin: 0; }
+    .badge { background: #e8efe9; color: var(--accent); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; display: inline-block; margin-top: 8px; }
+    .endpoint { background: var(--card); border: 1px solid var(--line); border-radius: 6px; margin-bottom: 16px; padding: 18px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    .endpoint-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .method { font-weight: 700; font-size: 0.78rem; padding: 3px 8px; border-radius: 3px; color: #fff; text-transform: uppercase; }
+    .method.get { background: var(--method-get); }
+    .method.post { background: var(--method-post); }
+    .path { font-family: monospace; font-size: 1rem; font-weight: 600; }
+    .summary { color: var(--muted); font-size: 0.9rem; margin-bottom: 12px; }
+    .curl { background: #f0f2ed; padding: 10px 14px; border-radius: 4px; font-family: monospace; font-size: 0.82rem; color: #2e3831; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>CloudPulse Multi-Tenant Analytics</h1>
+    <p class="desc">Enterprises struggle to monitor multi-tenant applications with granular data isolation and real-time observability.</p>
+    <div class="badge">OpenAPI 3.0.3 • Multi-Tenant Enterprise • Zero External Dependencies</div>
+  </div>
+
+  <h2>Rotas da API REST</h2>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method get">GET</span>
+      <span class="path">/health</span>
+    </div>
+    <div class="summary">Sonda de integridade operacional, uptime e contagem de tenants.</div>
+    <div class="curl">curl -X GET http://localhost:3000/health</div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method get">GET</span>
+      <span class="path">/metrics</span>
+    </div>
+    <div class="summary">Telemetria operacional nativa no padrão Prometheus.</div>
+    <div class="curl">curl -X GET http://localhost:3000/metrics</div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method get">GET</span>
+      <span class="path">/api/v1/tenants</span>
+    </div>
+    <div class="summary">Listagem de inquilinos com isolamento estrito e quotas ativas.</div>
+    <div class="curl">curl -X GET http://localhost:3000/api/v1/tenants -H "Authorization: Bearer sk_live_enterprise_demo_key_999"</div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method post">POST</span>
+      <span class="path">/api/v1/resources</span>
+    </div>
+    <div class="summary">Criação transacional de recurso com Write-Ahead Log e emissão de webhook.</div>
+    <div class="curl">curl -X POST http://localhost:3000/api/v1/resources -H "Authorization: Bearer sk_live_enterprise_demo_key_999" -H "Content-Type: application/json" -d '{"title":"Cluster Alpha","data":{"nodes":8}}'</div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method post">POST</span>
+      <span class="path">/api/v1/stream/events</span>
+    </div>
+    <div class="summary">Ingestão de alta vazão no motor de streaming para cálculo de percentis de latência.</div>
+    <div class="curl">curl -X POST http://localhost:3000/api/v1/stream/events -H "Authorization: Bearer sk_live_enterprise_demo_key_999" -H "Content-Type: application/json" -d '{"source":"iot-gateway","eventType":"telemetry","durationMs":24,"statusCode":200}'</div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method get">GET</span>
+      <span class="path">/api/v1/stream/analytics</span>
+    </div>
+    <div class="summary">Agregação estatística de percentis (P50, P95, P99) em janela deslizante.</div>
+    <div class="curl">curl -X GET http://localhost:3000/api/v1/stream/analytics -H "Authorization: Bearer sk_live_enterprise_demo_key_999"</div>
+  </div>
+</body>
+</html>
