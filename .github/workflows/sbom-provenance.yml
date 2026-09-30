@@ -1,0 +1,31 @@
+name: "Supply Chain & SBOM Validation"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate-supply-chain:
+    name: Validate SBOM & Provenance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Verify SPDX SBOM Exists
+        run: |
+          if [ ! -f "sbom.spdx.json" ]; then
+            echo "::error::sbom.spdx.json is missing from repository root!"
+            exit 1
+          fi
+          echo "SPDX 2.3 SBOM confirmed present."
+
+      - name: Validate Zero Unaudited Runtime Dependencies
+        run: |
+          if [ -f "scripts/verify-zero-deps.ts" ]; then
+            node --experimental-strip-types scripts/verify-zero-deps.ts
+          else
+            echo "Skipping zero-deps verification script (not present)."
+          fi

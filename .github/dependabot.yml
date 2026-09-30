@@ -1,0 +1,31 @@
+version: 2
+updates:
+  # Monitoramento de atualizações para ecossistema npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "security"
+    reviewers:
+      - "FelipeMadson"
+    commit-message:
+      prefix: "build(deps)"
+      include: "scope"
+
+  # Monitoramento de atualizações para GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 5
+    labels:
+      - "ci"
+      - "security"
+    commit-message:
+      prefix: "ci(actions)"

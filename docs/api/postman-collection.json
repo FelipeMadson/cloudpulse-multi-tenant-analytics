@@ -1,0 +1,261 @@
+{
+  "info": {
+    "_postman_id": "col-cloudpulse-multi-tenant-analytics-felipe-madson",
+    "name": "Cloudpulse Multi Tenant Analytics — Official API Collection",
+    "description": "Coleção oficial de testes e integração para Cloudpulse Multi Tenant Analytics (cloudpulse-multi-tenant-analytics). Arquitetado por Felipe Madison (@FelipeMadson).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "apiKey",
+      "value": "test-staff-engineer-token-madison",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Health & Liveness Probe",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "X-Trace-Id",
+            "value": "trace-pm-{{$guid}}",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
+        },
+        "description": "Verifica a integridade imediata do serviço, tempo de atividade e status do subsistema WAL."
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code é esperado (200, 201 ou 202)', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+              "});",
+              "",
+              "pm.test('Tempo de resposta é compatível com SLA (< 250ms)', function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(250);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. OpenMetrics / Prometheus Telemetry",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "X-Trace-Id",
+            "value": "trace-pm-{{$guid}}",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/metrics",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "metrics"
+          ]
+        },
+        "description": "Exporta telemetria em formato texto padrão OpenMetrics para raspagem por Prometheus e Grafana."
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code é esperado (200, 201 ou 202)', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+              "});",
+              "",
+              "pm.test('Tempo de resposta é compatível com SLA (< 250ms)', function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(250);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Dispatch / Processar Operação — Cloudpulse Multi Tenant Analytics",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "X-Trace-Id",
+            "value": "trace-pm-{{$guid}}",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/cloudpulse-multi-tenant-analytics/dispatch",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "cloudpulse-multi-tenant-analytics",
+            "dispatch"
+          ]
+        },
+        "description": "Executa transação com garantia de atomicidade, validação de integridade e registro no log WAL.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action\": \"PROCESS_TRANSACTION\",\n  \"payload\": {\n    \"clientId\": \"felipe-madison-tester\",\n    \"timestamp\": \"2026-09-30T15:18:12.242Z\",\n    \"data\": {\n      \"sampleKey\": \"enterprise-payload-sample\",\n      \"priority\": \"HIGH\"\n    }\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code é esperado (200, 201 ou 202)', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+              "});",
+              "",
+              "pm.test('Tempo de resposta é compatível com SLA (< 250ms)', function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(250);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Consulta de Estado Consolidado — Cloudpulse Multi Tenant Analytics",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "X-Trace-Id",
+            "value": "trace-pm-{{$guid}}",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/cloudpulse-multi-tenant-analytics/state",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "cloudpulse-multi-tenant-analytics",
+            "state"
+          ]
+        },
+        "description": "Recupera o estado atualizado em memória e estatísticas de processamento persistidas."
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code é esperado (200, 201 ou 202)', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+              "});",
+              "",
+              "pm.test('Tempo de resposta é compatível com SLA (< 250ms)', function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(250);",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

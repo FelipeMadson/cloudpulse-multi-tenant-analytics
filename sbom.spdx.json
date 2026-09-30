@@ -1,0 +1,46 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "Cloudpulse Multi Tenant Analytics SBOM",
+  "documentNamespace": "https://github.com/FelipeMadson/cloudpulse-multi-tenant-analytics/spdxdocs/cloudpulse-multi-tenant-analytics-1.0.0-162817ed-ea7c-464c-bde0-39900c4c896f",
+  "creationInfo": {
+    "created": "2026-09-30T15:18:12.243Z",
+    "creators": [
+      "Person: Felipe Madison (@FelipeMadson)",
+      "Organization: Autonomous Portfolio Engine — Staff Engineering Grade",
+      "Tool: SecurityCiGenerator-1.0.0"
+    ],
+    "licenseListVersion": "3.21"
+  },
+  "packages": [
+    {
+      "name": "cloudpulse-multi-tenant-analytics",
+      "SPDXID": "SPDXRef-Package-cloudpulse-multi-tenant-analytics",
+      "versionInfo": "1.0.0",
+      "packageFileName": "cloudpulse-multi-tenant-analytics-1.0.0.tar.gz",
+      "packageSupplier": "Person: Felipe Madison (https://github.com/FelipeMadson)",
+      "originator": "Person: Felipe Madison (https://github.com/FelipeMadson)",
+      "downloadLocation": "git+https://github.com/FelipeMadson/cloudpulse-multi-tenant-analytics.git@v1.0.0",
+      "filesAnalyzed": false,
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "8548d949521b7773e43603ec9704b37e1aedf45cc0c3f70bdcef791bfd079f31"
+        }
+      ],
+      "homepage": "https://github.com/FelipeMadson/cloudpulse-multi-tenant-analytics",
+      "concludedLicense": "MIT",
+      "declaredLicense": "MIT",
+      "copyrightText": "Copyright (c) 2026 Felipe Madison (@FelipeMadson)",
+      "description": "Enterprise-grade production release for Cloudpulse Multi Tenant Analytics, engineered by Felipe Madison."
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relatedSpdxElement": "SPDXRef-Package-cloudpulse-multi-tenant-analytics",
+      "relationshipType": "DESCRIBES"
+    }
+  ]
+}

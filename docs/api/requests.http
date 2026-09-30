@@ -1,0 +1,87 @@
+### ===================================================================
+### Cloudpulse Multi Tenant Analytics — HTTP Client Requests Suite
+### Padrão RFC 7230 / JetBrains HTTP Client / VS Code REST Client
+### Desenvolvido e mantido por: Felipe Madison (@FelipeMadson)
+### ===================================================================
+
+@baseUrl = http://localhost:3000
+@apiKey = test-staff-engineer-token-madison
+@contentType = application/json
+
+### 1. Health & Liveness Probe
+# Verifica a integridade imediata do serviço, tempo de atividade e status do subsistema WAL.
+GET {{baseUrl}}/health
+Accept: {{contentType}}
+Authorization: Bearer {{apiKey}}
+X-Trace-Id: req-trace-1
+
+> {%
+client.test("Status code is valid", function() {
+    client.assert(response.status >= 200 && response.status < 300, "Response status is not 2xx");
+});
+client.test("Response is received within latency budget", function() {
+    client.assert(response.responseTime < 300, "Latency threshold exceeded");
+});
+%}
+
+### 2. OpenMetrics / Prometheus Telemetry
+# Exporta telemetria em formato texto padrão OpenMetrics para raspagem por Prometheus e Grafana.
+GET {{baseUrl}}/metrics
+Accept: {{contentType}}
+Authorization: Bearer {{apiKey}}
+X-Trace-Id: req-trace-2
+
+> {%
+client.test("Status code is valid", function() {
+    client.assert(response.status >= 200 && response.status < 300, "Response status is not 2xx");
+});
+client.test("Response is received within latency budget", function() {
+    client.assert(response.responseTime < 300, "Latency threshold exceeded");
+});
+%}
+
+### 3. Dispatch / Processar Operação — Cloudpulse Multi Tenant Analytics
+# Executa transação com garantia de atomicidade, validação de integridade e registro no log WAL.
+POST {{baseUrl}}/api/v1/cloudpulse-multi-tenant-analytics/dispatch
+Accept: {{contentType}}
+Authorization: Bearer {{apiKey}}
+X-Trace-Id: req-trace-3
+Content-Type: {{contentType}}
+
+{
+  "action": "PROCESS_TRANSACTION",
+  "payload": {
+    "clientId": "felipe-madison-tester",
+    "timestamp": "2026-09-30T15:18:12.242Z",
+    "data": {
+      "sampleKey": "enterprise-payload-sample",
+      "priority": "HIGH"
+    }
+  }
+}
+
+> {%
+client.test("Status code is valid", function() {
+    client.assert(response.status >= 200 && response.status < 300, "Response status is not 2xx");
+});
+client.test("Response is received within latency budget", function() {
+    client.assert(response.responseTime < 300, "Latency threshold exceeded");
+});
+%}
+
+### 4. Consulta de Estado Consolidado — Cloudpulse Multi Tenant Analytics
+# Recupera o estado atualizado em memória e estatísticas de processamento persistidas.
+GET {{baseUrl}}/api/v1/cloudpulse-multi-tenant-analytics/state
+Accept: {{contentType}}
+Authorization: Bearer {{apiKey}}
+X-Trace-Id: req-trace-4
+
+> {%
+client.test("Status code is valid", function() {
+    client.assert(response.status >= 200 && response.status < 300, "Response status is not 2xx");
+});
+client.test("Response is received within latency budget", function() {
+    client.assert(response.responseTime < 300, "Latency threshold exceeded");
+});
+%}
+
