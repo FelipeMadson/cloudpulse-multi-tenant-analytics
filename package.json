@@ -1,5 +1,5 @@
 {
-  "name": "cloudpulse-multi-tenant-analytics-root",
+  "name": "@felipemadson/cloudpulse-multi-tenant-analytics",
   "version": "1.1.0",
   "private": true,
   "type": "module",
@@ -19,5 +19,9 @@
     "cloudpulse-multi-tenant-analytics"
   ],
   "author": "Felipe Madison (@FelipeMadson)",
-  "license": "MIT"
+  "license": "MIT",
+  "bin": {
+    "cloudpulse-multi-tenant-analytics": "./bin/cli.js",
+    "@felipemadson/cloudpulse-multi-tenant-analytics": "./bin/cli.js"
+  }
 }

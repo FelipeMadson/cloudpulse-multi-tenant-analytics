@@ -1,0 +1,54 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "@felipemadson/cloudpulse-multi-tenant-analytics",
+    "version": "1.1.0",
+    "description": "Production OpenAPI 3.1 contract for Cloudpulse Multi Tenant Analytics maintained by Felipe Madison (@FelipeMadson)."
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health probe and diagnostics",
+        "responses": {
+          "200": {
+            "description": "Service is healthy and fully operational",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "HEALTHY"
+                    },
+                    "uptime": {
+                      "type": "number",
+                      "example": 3600
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "summary": "Prometheus metrics exposition",
+        "responses": {
+          "200": {
+            "description": "Standard Prometheus metrics format",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

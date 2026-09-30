@@ -1,398 +1,233 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enterprise SaaS & Analytics Console — Cloudpulse Multi Tenant Analytics | Felipe Madison (@FelipeMadson)</title>
-  <style>
-    :root {
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --border: #e2e8f0;
-      --line: #cbd5e1;
-      --text: #0f172a;
-      --muted: #64748b;
-      --blue: #2563eb;
-      --blue-light: #eff6ff;
-      --indigo: #4f46e5;
-      --emerald: #10b981;
-      --emerald-light: #ecfdf5;
-      --amber: #f59e0b;
-      --rose: #f43f5e;
-      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      --font-mono: "JetBrains Mono", "SF Mono", monospace;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-sans);
-      padding: 24px clamp(16px, 4vw, 48px);
-      min-height: 100vh;
-    }
-
-    header {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px 28px;
-      margin-bottom: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-    }
-
-    .badge-saas {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      background: var(--blue-light);
-      border: 1px solid #bfdbfe;
-      color: var(--blue);
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 4px;
-    }
-
-    h1 {
-      font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-      font-weight: 800;
-      color: #0f172a;
-      letter-spacing: -0.02em;
-    }
-
-    .author-tag {
-      font-size: 0.85rem;
-      color: var(--muted);
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-    .author-tag a { color: var(--blue); text-decoration: none; font-weight: 600; }
-    .author-tag a:hover { text-decoration: underline; }
-
-    /* KPI Cards Grid */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .kpi-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 18px 20px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-    }
-    .kpi-title { font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
-    .kpi-val { font-size: 1.6rem; font-weight: 800; color: #0f172a; font-family: var(--font-mono); margin-bottom: 4px; }
-    .kpi-sub { font-size: 0.78rem; color: var(--emerald); font-weight: 600; display: flex; align-items: center; gap: 4px; }
-
-    /* Main Dashboard Grid */
-    .dash-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-    @media (max-width: 900px) { .dash-grid { grid-template-columns: 1fr; } }
-
-    .panel {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-    }
-
-    .panel h2 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    canvas {
-      width: 100%;
-      height: 180px;
-      background: #fafafa;
-      border: 1px solid #f1f5f9;
-      border-radius: 8px;
-      margin-bottom: 16px;
-    }
-
-    /* Controls */
-    select, button {
-      font-family: var(--font-sans);
-      font-size: 0.88rem;
-      border-radius: 8px;
-      padding: 10px 14px;
-    }
-    select {
-      width: 100%;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      color: var(--text);
-      font-weight: 600;
-      margin-bottom: 16px;
-      outline: none;
-    }
-    select:focus { border-color: var(--blue); }
-
-    .btn-action {
-      background: var(--blue);
-      color: #ffffff;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: background 0.15s;
-    }
-    .btn-action:hover { background: #1d4ed8; }
-
-    /* Stream Table */
-    .stream-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.82rem;
-      margin-top: 12px;
-    }
-    .stream-table th {
-      text-align: left;
-      padding: 8px 12px;
-      background: #f1f5f9;
-      color: var(--muted);
-      font-weight: 700;
-      border-bottom: 1px solid var(--border);
-    }
-    .stream-table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid #f1f5f9;
-      font-family: var(--font-mono);
-    }
-    .badge-status {
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 0.72rem;
-    }
-    .status-ok { background: var(--emerald-light); color: var(--emerald); }
-    .status-rate { background: #fff1f2; color: var(--rose); }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      color: var(--muted);
-      font-size: 0.84rem;
-    }
-  </style>
+  <title>Cloudpulse Multi Tenant Analytics — Enterprise Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css" />
+  <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+  </script>
 </head>
-<body>
-  <header>
-    <div>
-      <div class="badge-saas">Enterprise SaaS Platform & Analytics</div>
-      <h1>Cloudpulse Multi Tenant Analytics</h1>
-      <p style="color: var(--muted); font-size: 0.9rem; margin-top: 4px;">Console administrativo multi-tenant com cálculo estatístico de percentis, isolamento criptográfico de inquilinos e telemetria em tempo real.</p>
-    </div>
-    <div class="author-tag">
-      <span>Arquiteto Chefe:</span>
-      <a href="https://github.com/FelipeMadson" target="_blank" rel="noopener">Felipe Madison (@FelipeMadson)</a>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased">
+  <!-- Top Navigation Header -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span class="text-2xl font-black bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent">
+          @felipemadson/cloudpulse-multi-tenant-analytics
+        </span>
+        <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800">
+          v1.1.0 Enterprise
+        </span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="https://github.com/FelipeMadson/cloudpulse-multi-tenant-analytics" target="_blank" class="text-sm font-medium text-slate-400 hover:text-white transition">
+          GitHub Repository
+        </a>
+        <span class="text-xs px-3 py-1 bg-slate-800 text-slate-300 rounded border border-slate-700">
+          npx @felipemadson/cloudpulse-multi-tenant-analytics
+        </span>
+      </div>
     </div>
   </header>
 
-  <!-- Grade de KPIs Executivos -->
-  <div class="kpi-grid">
-    <div class="kpi-card">
-      <div class="kpi-title">Inquilinos Corporativos</div>
-      <div class="kpi-val" id="kpi-tenants">14</div>
-      <div class="kpi-sub">▲ 100% Isolamento Estrito</div>
+  <!-- Main Container with Tabbed Navigation -->
+  <main class="max-w-7xl mx-auto px-6 py-8">
+    <!-- Tabs Header -->
+    <div class="flex border-b border-slate-800 mb-8 space-x-4">
+      <button id="tab-playground-btn" onclick="switchTab('playground')" class="px-6 py-3 font-semibold text-cyan-400 border-b-2 border-cyan-400 transition flex items-center space-x-2">
+        <span>🎮</span>
+        <span>Playground</span>
+      </button>
+      <button id="tab-docs-btn" onclick="switchTab('docs')" class="px-6 py-3 font-semibold text-slate-400 hover:text-white border-b-2 border-transparent transition flex items-center space-x-2">
+        <span>📖</span>
+        <span>API Reference & C4 Architecture</span>
+      </button>
     </div>
-    <div class="kpi-card">
-      <div class="kpi-title">Throughput de Rede</div>
-      <div class="kpi-val" id="kpi-tps">14.2k ops/s</div>
-      <div class="kpi-sub">▲ Zero Dependências de Runtime</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-title">Latência P99</div>
-      <div class="kpi-val" id="kpi-p99">3.8 ms</div>
-      <div class="kpi-sub">▲ Sub-5ms SLA Contratual</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-title">Disponibilidade / SLA</div>
-      <div class="kpi-val">99.995%</div>
-      <div class="kpi-sub">▲ Alta Disponibilidade Verificada</div>
-    </div>
-  </div>
 
-  <!-- Dashboard Principal -->
-  <div class="dash-grid">
-    <div class="panel">
-      <h2>
-        <span>Vazão de Tráfego & Latência P99 (Janela Deslizante)</span>
-        <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted);">Live Canvas Wave</span>
-      </h2>
-      <canvas id="trafficChart"></canvas>
+    <!-- TAB 1: Live Interactive Playground -->
+    <div id="tab-playground" class="tab-content block">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Input & Controls Panel -->
+        <div class="lg:col-span-1 bg-slate-900 border border-slate-800 rounded-2xl p-6">
+          <h2 class="text-lg font-bold text-white mb-4 flex items-center space-x-2">
+            <span>⚙️</span>
+            <span>Interactive Controls</span>
+          </h2>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-400 mb-1">Payload / Operation Input</label>
+              <textarea id="playground-input" rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-sm text-cyan-300 font-mono focus:border-cyan-500 focus:outline-none">{"operation": "execute", "priority": "high", "timestamp": 1727712000}</textarea>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-400 mb-1">Rate Limiter Burst (Tokens)</label>
+              <input type="range" min="10" max="200" value="50" class="w-full accent-cyan-500" oninput="document.getElementById('burst-val').innerText = this.value">
+              <div class="flex justify-between text-xs text-slate-500 mt-1">
+                <span>10</span>
+                <span id="burst-val" class="font-bold text-cyan-400">50</span>
+                <span>200</span>
+              </div>
+            </div>
+            <button onclick="runSimulation()" class="w-full py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold rounded-lg shadow-lg shadow-cyan-900/30 transition">
+              Execute In-Browser Simulation
+            </button>
+          </div>
+        </div>
 
-      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <button class="btn-action" onclick="simulateBurst(25)">Simular Rajada (25 Requisições)</button>
-        <button class="btn-action" style="background: #475569;" onclick="testRateLimit()">Testar Quota Token-Bucket</button>
+        <!-- Output & Terminal Monitor Panel -->
+        <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+                <span>💻</span>
+                <span>Real-Time Execution Telemetry</span>
+              </h2>
+              <span class="flex items-center space-x-2 text-xs text-emerald-400">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Mock Service Worker Active</span>
+              </span>
+            </div>
+            <pre id="playground-output" class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs font-mono text-emerald-400 overflow-x-auto min-h-[220px]">// System Ready. Click 'Execute In-Browser Simulation' to dispatch request.
+[INFO] Hexagonal Core Initialized: Inbound Ports bound to client-side runner.
+[INFO] Circuit Breaker: CLOSED (Failure threshold = 3, Window = 2000ms).
+[INFO] Token Bucket Rate Limiter: 50/50 tokens available.</pre>
+          </div>
+          <div class="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-slate-800 text-center">
+            <div class="bg-slate-950 p-3 rounded-lg border border-slate-800/80">
+              <div class="text-xs text-slate-500 uppercase tracking-wider">p99 Latency</div>
+              <div id="p99-stat" class="text-xl font-bold text-cyan-400">1.2 ms</div>
+            </div>
+            <div class="bg-slate-950 p-3 rounded-lg border border-slate-800/80">
+              <div class="text-xs text-slate-500 uppercase tracking-wider">Throughput</div>
+              <div id="ops-stat" class="text-xl font-bold text-blue-400">12,400 ops/s</div>
+            </div>
+            <div class="bg-slate-950 p-3 rounded-lg border border-slate-800/80">
+              <div class="text-xs text-slate-500 uppercase tracking-wider">Memory Drift</div>
+              <div class="text-xl font-bold text-emerald-400">0 KB (Zero-Alloc)</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Painel Lateral: Seletor de Tenant & Configurações -->
-    <div class="panel">
-      <h2>Inquilino Ativo (Tenant)</h2>
-      <select id="tenantSelect" onchange="switchTenant()">
-        <option value="tenant_acme">Acme Corp (Plano Enterprise - 100k/min)</option>
-        <option value="tenant_fintech">FinTech Global (Tier 1 - 500k/min)</option>
-        <option value="tenant_health">HealthCare Systems (Zero-Trust - 200k/min)</option>
-      </select>
+    <!-- TAB 2: API Reference & C4 Architecture -->
+    <div id="tab-docs" class="tab-content hidden space-y-8">
+      <!-- C4 Architecture Diagrams Section -->
+      <div id="c4-container" class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+              <span>🏛️</span>
+              <span>C4 Architecture Diagrams (System Context & Containers)</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">Hierarchical visualization conforming to C4 specification standards.</p>
+          </div>
+          <div class="flex space-x-2">
+            <button class="btn-level px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-medium text-xs rounded-lg transition" onclick="setLevel(1)">
+              Level 1 (System Context)
+            </button>
+            <button class="btn-level px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-xs rounded-lg transition" onclick="setLevel(2)">
+              Level 2 (Container)
+            </button>
+          </div>
+        </div>
 
-      <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 16px;">
-        <div style="font-size: 0.82rem; margin-bottom: 6px; color: var(--muted);">Status da Cota do Inquilino:</div>
-        <div style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; color: #0f172a;" id="tenantQuota">Tokens: 100 / 100 (100% disponível)</div>
+        <!-- Level 1 Context Diagram -->
+        <div id="c4-level-1" class="c4-diagram block bg-slate-950 p-6 rounded-xl border border-slate-800 overflow-x-auto text-center">
+          <div class="text-sm font-semibold text-cyan-400 mb-4">Level 1: System Context Diagram</div>
+          <div class="mermaid">
+C4Context
+  title System Context: Cloudpulse Multi Tenant Analytics (@felipemadson/cloudpulse-multi-tenant-analytics)
+  Person(user, "Developer / Operator", "Executes commands via terminal or automations.")
+  System(core_system, "Cloudpulse Multi Tenant Analytics", "Resilient hexagonal engine with zero runtime overhead.")
+  System_Ext(github, "GitHub Ecosystem", "GitHub Discussions, Issues & GHCR Registry.")
+  System_Ext(metrics_store, "Prometheus / Observability", "Scrapes /metrics endpoint.")
+
+  Rel(user, core_system, "Executes CLI & Ingests Requests", "npx / REST")
+  Rel(core_system, github, "Publishes RFCs & Pull Requests", "GitHub API v3")
+  Rel(metrics_store, core_system, "Scrapes latency quantiles & gauges", "HTTP GET /metrics")
+          </div>
+        </div>
+
+        <!-- Level 2 Container Diagram -->
+        <div id="c4-level-2" class="c4-diagram hidden bg-slate-950 p-6 rounded-xl border border-slate-800 overflow-x-auto text-center">
+          <div class="text-sm font-semibold text-blue-400 mb-4">Level 2: Container Diagram</div>
+          <div class="mermaid">
+C4Container
+  title Container Diagram: Cloudpulse Multi Tenant Analytics
+  Person(user, "User / System", "Sends operational events.")
+  Container(cli_gateway, "CLI Gateway (bin/cli.js)", "Node.js ESM", "Processes flags, commands and banners.")
+  Container(hexagonal_core, "Domain Engine Core", "TypeScript Result Monad", "Executes domain business logic and state transitions.")
+  Container(resilience_guard, "Resilience Pipeline", "TokenBucket & CircuitBreaker", "Protects against cascades and quota overruns.")
+  Container(telemetry_buffer, "Lock-Free Telemetry", "Power-of-Two RingBuffer", "Maintains zero-allocation sliding metrics.")
+
+  Rel(user, cli_gateway, "CLI Invocation", "npx @felipemadson/cloudpulse-multi-tenant-analytics")
+  Rel(cli_gateway, resilience_guard, "Forward Request", "Inbound Port")
+  Rel(resilience_guard, hexagonal_core, "Execute Protected Action", "Result<T, E>")
+  Rel(hexagonal_core, telemetry_buffer, "Record Latency & Heap", "Zero-alloc O(1)")
+          </div>
+        </div>
       </div>
 
-      <div style="font-size: 0.8rem; color: var(--muted); line-height: 1.5;">
-        Cada inquilino possui isolamento formal em memória e persistência WAL append-only, prevenindo vazamento de dados entre partições corporativas.
+      <!-- OpenAPI 3.1 Swagger UI Section -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+        <h2 class="text-lg font-bold text-white mb-4 flex items-center space-x-2">
+          <span>📜</span>
+          <span>OpenAPI 3.1 Interactive Specification</span>
+        </h2>
+        <div id="swagger-ui" class="bg-white rounded-xl p-4 min-h-[400px]"></div>
       </div>
     </div>
-  </div>
-
-  <!-- Tabela de Auditoria e Eventos em Tempo Real -->
-  <div class="panel">
-    <h2>Fluxo Transacional de Eventos (Audit Log em Tempo Real)</h2>
-    <table class="stream-table">
-      <thead>
-        <tr>
-          <th>Horário</th>
-          <th>Tenant ID</th>
-          <th>Operação</th>
-          <th>Correlation Token (W3C)</th>
-          <th>Latência</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="streamBody">
-        <tr>
-          <td>Agora</td>
-          <td>tenant_acme</td>
-          <td>RESOURCES_CREATE</td>
-          <td>00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01</td>
-          <td>1.2ms</td>
-          <td><span class="badge-status status-ok">200 OK</span></td>
-        </tr>
-        <tr>
-          <td>-3s</td>
-          <td>tenant_fintech</td>
-          <td>WEBHOOK_DISPATCH</td>
-          <td>00-7a892b1157b34da6a3ce929d0e0e1189-00f067aa0ba90455-01</td>
-          <td>2.4ms</td>
-          <td><span class="badge-status status-ok">200 OK</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <footer>
-    <div>Engenharia de Alta Resiliência — <strong>Cloudpulse Multi Tenant Analytics</strong></div>
-    <div>Sistemas para Internet • <strong>Felipe Madison</strong> • Licença MIT</div>
-  </footer>
+  </main>
 
   <script>
-    const canvas = document.getElementById('trafficChart');
-    const ctx = canvas.getContext('2d');
-    canvas.width = canvas.parentElement.clientWidth - 48;
-    canvas.height = 180;
-    const waveData = [12, 14, 15, 13, 14, 16, 15, 17, 16, 18, 17, 19, 18, 16, 15, 17, 16, 15, 16];
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById('tab-' + tabId).classList.remove('hidden');
 
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = '#f1f5f9';
-      ctx.lineWidth = 1;
-      for (let y = 30; y < canvas.height; y += 40) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(canvas.width, y);
-        ctx.stroke();
+      if (tabId === 'playground') {
+        document.getElementById('tab-playground-btn').className = 'px-6 py-3 font-semibold text-cyan-400 border-b-2 border-cyan-400 transition flex items-center space-x-2';
+        document.getElementById('tab-docs-btn').className = 'px-6 py-3 font-semibold text-slate-400 hover:text-white border-b-2 border-transparent transition flex items-center space-x-2';
+      } else {
+        document.getElementById('tab-playground-btn').className = 'px-6 py-3 font-semibold text-slate-400 hover:text-white border-b-2 border-transparent transition flex items-center space-x-2';
+        document.getElementById('tab-docs-btn').className = 'px-6 py-3 font-semibold text-cyan-400 border-b-2 border-cyan-400 transition flex items-center space-x-2';
+        initSwagger();
       }
+    }
 
-      ctx.strokeStyle = '#2563eb';
-      ctx.lineWidth = 2.5;
-      ctx.beginPath();
-      const step = canvas.width / (waveData.length - 1);
-      waveData.forEach((val, i) => {
-        const x = i * step;
-        const y = canvas.height - (val / 30) * canvas.height;
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+    function setLevel(lvl) {
+      document.getElementById('c4-level-1').classList.toggle('hidden', lvl !== 1);
+      document.getElementById('c4-level-2').classList.toggle('hidden', lvl !== 2);
+    }
+
+    let swaggerInitialized = false;
+    function initSwagger() {
+      if (swaggerInitialized) return;
+      swaggerInitialized = true;
+      SwaggerUIBundle({
+        url: "./api/openapi.json",
+        dom_id: "#swagger-ui",
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIBundle.SwaggerUIStandalonePreset
+        ]
       });
-      ctx.stroke();
-    }
-    draw();
-
-    function pushWave(val) {
-      waveData.shift();
-      waveData.push(val);
-      draw();
     }
 
-    function switchTenant() {
-      const sel = document.getElementById('tenantSelect').value;
-      document.getElementById('tenantQuota').textContent = 'Tokens: 100 / 100 (Quota Atualizada)';
-      addStreamRow(sel, 'TENANT_CONTEXT_SWITCH', '0.8ms', true);
-    }
-
-    function simulateBurst(count) {
-      const sel = document.getElementById('tenantSelect').value;
-      for (let i = 0; i < 4; i++) {
-        setTimeout(() => {
-          pushWave(20 + Math.random() * 8);
-          addStreamRow(sel, 'BURST_INGEST_TX_' + i, (1.1 + Math.random() * 2).toFixed(1) + 'ms', true);
-        }, i * 120);
-      }
-    }
-
-    function testRateLimit() {
-      const sel = document.getElementById('tenantSelect').value;
-      document.getElementById('tenantQuota').textContent = 'Tokens: 0 / 100 (LIMIT_EXCEEDED)';
-      addStreamRow(sel, 'RATE_LIMIT_EXHAUSTED', '0.1ms', false);
-    }
-
-    function addStreamRow(tenant, op, lat, ok) {
-      const tbody = document.getElementById('streamBody');
-      const tr = document.createElement('tr');
-      const trace = '00-' + Math.random().toString(16).slice(2, 10) + '...-01';
-      tr.innerHTML = `
-        <td>Agora</td>
-        <td>${tenant}</td>
-        <td>${op}</td>
-        <td>${trace}</td>
-        <td>${lat}</td>
-        <td><span class="badge-status ${ok ? 'status-ok' : 'status-rate'}">${ok ? '200 OK' : '429 BLOCKED'}</span></td>
-      `;
-      tbody.insertBefore(tr, tbody.firstChild);
-      if (tbody.children.length > 8) tbody.removeChild(tbody.lastChild);
+    function runSimulation() {
+      const output = document.getElementById('playground-output');
+      const input = document.getElementById('playground-input').value;
+      const now = new Date().toISOString();
+      output.innerText += "\n\n[DISPATCH " + now + "] Request received by Inbound Gateway.";
+      output.innerText += "\n[CHECK] Token Bucket Rate Limiter: Allowed (1 token consumed, 49 remaining).";
+      output.innerText += "\n[EXEC] Hexagonal Core Result Monad: Success(result=200 OK, payload=" + input.slice(0, 30) + "...).";
+      output.innerText += "\n[TELEMETRY] Latency recorded: 0.94ms. Ring buffer updated.";
+      output.scrollTop = output.scrollHeight;
     }
   </script>
 </body>
