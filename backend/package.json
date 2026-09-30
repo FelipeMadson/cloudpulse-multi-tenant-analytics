@@ -1,0 +1,26 @@
+{
+  "name": "cloudpulse-multi-tenant-analytics-backend",
+  "version": "1.0.0",
+  "description": "Backend Enterprise SaaS para CloudPulse Multi-Tenant Analytics",
+  "type": "module",
+  "main": "src/server.ts",
+  "scripts": {
+    "start": "node --experimental-strip-types src/server.ts",
+    "test": "node --experimental-strip-types --test tests/**/*.test.ts",
+    "build": "tsc --noEmit"
+  },
+  "keywords": [
+    "saas",
+    "multi-tenant",
+    "typescript",
+    "local-first",
+    "enterprise",
+    "cloudpulse-multi-tenant-analytics"
+  ],
+  "author": "Felipe Madison (@FelipeMadson)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}
