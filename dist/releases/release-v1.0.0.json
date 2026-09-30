@@ -2,9 +2,9 @@
   "slug": "cloudpulse-multi-tenant-analytics",
   "version": "v1.0.0",
   "archiveFilename": "cloudpulse-multi-tenant-analytics-v1.0.0.tar.gz",
-  "archiveSizeBytes": 42707,
-  "sha256": "621298d248e4dfa3671059d021cc8f82fab9d7c16084d709642c6e5a2441e5bd",
+  "archiveSizeBytes": 42421,
+  "sha256": "70e3df3c94fabf72d6b40a4fb5d26bdfb3b9514a03eb25e0e553bab2ce951d5a",
   "filesIncluded": 56,
-  "createdAt": "2026-09-30T16:10:31.430Z",
+  "createdAt": "2026-09-30T16:34:40.960Z",
   "author": "Felipe Madison (@FelipeMadson)"
 }
