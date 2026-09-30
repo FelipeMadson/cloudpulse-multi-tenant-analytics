@@ -1,0 +1,23 @@
+{
+  "title": "${ctx.title} — Dashboard Operacional",
+  "panels": [
+    {
+      "title": "Throughput (req/s)",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(saas_http_requests_total[1m])"
+        }
+      ]
+    },
+    {
+      "title": "Uso de Heap (Bytes)",
+      "type": "gauge",
+      "targets": [
+        {
+          "expr": "saas_memory_heap_bytes"
+        }
+      ]
+    }
+  ]
+}
