@@ -4,6 +4,13 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico (SemVer)](https://semver.org/lang/pt-BR/).
 
+## [1.1.0] - 2026-09-30
+
+### Added
+- Deterministic zero-dependency system health probe (`getSystemHealthReport`) with heap memory and uptime reporting.
+- Automated diagnostic unit test suite.
+- Formal Pull Request #6 merged into main branch.
+
 ## [1.0.0] - 2026-09-30
 
 ### Adicionado
