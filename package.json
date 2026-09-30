@@ -1,0 +1,23 @@
+{
+  "name": "cloudpulse-multi-tenant-analytics-root",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "npm test --prefix backend",
+    "build": "npm run build --prefix backend || true",
+    "start": "npm start --prefix backend",
+    "benchmark": "npm run benchmark --prefix backend || true",
+    "db:migrate": "npm run db:migrate --prefix backend || true",
+    "db:seed": "npm run db:seed --prefix backend || true"
+  },
+  "keywords": [
+    "saas",
+    "multi-tenant",
+    "typescript",
+    "enterprise",
+    "cloudpulse-multi-tenant-analytics"
+  ],
+  "author": "Felipe Madison (@FelipeMadson)",
+  "license": "MIT"
+}
