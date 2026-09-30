@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - name: Checkout Código-Fonte
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     - name: Configurar Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
