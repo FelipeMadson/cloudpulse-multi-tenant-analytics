@@ -1,5 +1,8 @@
 # CloudPulse Multi-Tenant Analytics
 
+> 🇧🇷 **[Versão em Português](README.pt-BR.md)** | 🇺🇸 **English Version**
+
+
 [![CI Status](https://github.com/FelipeMadson/cloudpulse-multi-tenant-analytics/actions/workflows/ci.yml/badge.svg)](https://github.com/FelipeMadson/cloudpulse-multi-tenant-analytics/actions)
 [![Latest Release](https://img.shields.io/github/v/release/FelipeMadson/cloudpulse-multi-tenant-analytics?color=145e4d&logo=github)](https://github.com/FelipeMadson/cloudpulse-multi-tenant-analytics/releases)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-145e4d?logo=github)](https://felipemadson.github.io/cloudpulse-multi-tenant-analytics/)

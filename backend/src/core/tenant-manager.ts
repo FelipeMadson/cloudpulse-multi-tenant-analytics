@@ -1,3 +1,5 @@
+import { DatabaseSync } from "node:sqlite";
+
 export type SubscriptionTier = "free" | "starter" | "pro" | "enterprise";
 
 export interface Tenant {
@@ -12,20 +14,48 @@ export interface Tenant {
 
 export class TenantManager {
   private tenants: Map<string, Tenant> = new Map();
+  private db?: DatabaseSync;
 
-  constructor() {
-    this.registerTenant({
-      id: "tenant-enterprise-acme",
-      name: "Acme Global Enterprise",
-      tier: "enterprise",
-      quotaPerMinute: 10000
-    });
-    this.registerTenant({
-      id: "tenant-starter-sandbox",
-      name: "Sandbox Starter Corp",
-      tier: "starter",
-      quotaPerMinute: 300
-    });
+  constructor(db?: DatabaseSync) {
+    this.db = db;
+
+    // Se houver banco, carrega os tenants previamente persistidos
+    if (this.db) {
+      try {
+        const rows = this.db.prepare("SELECT id, name, tier, quota_per_minute, created_at FROM tenants").all() as any[];
+        for (const row of rows) {
+          this.tenants.set(row.id, {
+            id: row.id,
+            name: row.name,
+            tier: row.tier as SubscriptionTier,
+            createdAt: row.created_at,
+            quotaPerMinute: Number(row.quota_per_minute),
+            requestCountCurrentMinute: 0,
+            lastResetTimestamp: Date.now()
+          });
+        }
+      } catch {
+        // Tabela ainda pode não ter sido criada se executado antes da migração
+      }
+    }
+
+    if (!this.tenants.has("tenant-enterprise-acme")) {
+      this.registerTenant({
+        id: "tenant-enterprise-acme",
+        name: "Acme Global Enterprise",
+        tier: "enterprise",
+        quotaPerMinute: 10000
+      });
+    }
+
+    if (!this.tenants.has("tenant-starter-sandbox")) {
+      this.registerTenant({
+        id: "tenant-starter-sandbox",
+        name: "Sandbox Starter Corp",
+        tier: "starter",
+        quotaPerMinute: 300
+      });
+    }
   }
 
   public registerTenant(params: { id: string; name: string; tier?: SubscriptionTier; quotaPerMinute?: number }): Tenant {
@@ -36,16 +66,31 @@ export class TenantManager {
       pro: 1200,
       enterprise: 10000
     };
+    const quota = params.quotaPerMinute || quotaMap[tier];
+    const now = new Date().toISOString();
+
     const tenant: Tenant = {
       id: params.id,
       name: params.name,
       tier,
-      createdAt: new Date().toISOString(),
-      quotaPerMinute: params.quotaPerMinute || quotaMap[tier],
+      createdAt: now,
+      quotaPerMinute: quota,
       requestCountCurrentMinute: 0,
       lastResetTimestamp: Date.now()
     };
+
     this.tenants.set(tenant.id, tenant);
+
+    if (this.db) {
+      try {
+        this.db.prepare(
+          "INSERT OR REPLACE INTO tenants (id, name, tier, quota_per_minute, created_at) VALUES (?, ?, ?, ?, ?)"
+        ).run(tenant.id, tenant.name, tenant.tier, tenant.quotaPerMinute, tenant.createdAt);
+      } catch {
+        // Caso a tabela ainda não exista
+      }
+    }
+
     return tenant;
   }
 

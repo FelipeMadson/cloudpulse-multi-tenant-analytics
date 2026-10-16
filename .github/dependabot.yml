@@ -29,3 +29,14 @@ updates:
       - "security"
     commit-message:
       prefix: "ci(actions)"
+
+  # Backend dependencies have their own lockfile.
+  - package-ecosystem: "npm"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "build(deps)"

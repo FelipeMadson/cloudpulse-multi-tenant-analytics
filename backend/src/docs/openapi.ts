@@ -74,7 +74,7 @@ export function getOpenApiSpec(title: string, description: string): any {
         post: {
           summary: "Execução de Workflow DAG Orquestrado",
           security: [{ BearerAuth: [] }],
-          responses: { "200": { description: "Execução concluída com sucesso" } }
+          responses: { "501": { description: "Executor de build, testes e implantação não configurado; nenhuma implantação tentada" } }
         }
       }
     },

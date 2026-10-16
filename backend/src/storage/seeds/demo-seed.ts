@@ -21,16 +21,20 @@ export class DatabaseSeeder {
     const keyEnt = authManager.provisionKey(ent.id, "admin", "sk_live_enterprise_demo_key_999");
     const keySt = authManager.provisionKey(st.id, "member", "sk_live_starter_demo_key_111");
 
-    storage.insert(ent.id, "res_corp_01", "Cluster Primário Global", {
-      region: "us-east-1",
-      nodes: 16,
-      ha: true
-    });
+    if (!storage.get(ent.id, "res_corp_01")) {
+      storage.insert(ent.id, "res_corp_01", "Cluster Primário Global", {
+        region: "us-east-1",
+        nodes: 16,
+        ha: true
+      });
+    }
 
-    storage.insert(st.id, "res_fin_01", "Fila de Pagamentos Instantâneos", {
-      currency: "BRL",
-      throughput: "5000/s"
-    });
+    if (!storage.get(st.id, "res_fin_01")) {
+      storage.insert(st.id, "res_fin_01", "Fila de Pagamentos Instantâneos", {
+        currency: "BRL",
+        throughput: "5000/s"
+      });
+    }
 
     return {
       tenantsSeeded: 2,
